@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ProductRepository {
     List<Product> getAllProducts();
+
+    void updateStock(String productId, long noOfUnits);
 }
