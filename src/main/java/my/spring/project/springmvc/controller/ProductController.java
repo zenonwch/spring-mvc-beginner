@@ -5,10 +5,13 @@ import my.spring.project.springmvc.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
 @Controller
+@RequestMapping("market")
 public class ProductController {
 
     private final ProductService service;
@@ -25,9 +28,17 @@ public class ProductController {
         return "products";
     }
 
+    @GetMapping("/products/{category}")
+    public String getProductsByCategory(@PathVariable final String category, final Model model) {
+        final List<Product> products = service.getProductsByCategory(category);
+
+        model.addAttribute("products", products);
+        return "products";
+    }
+
     @GetMapping("/update/stock")
     public String updateStock() {
         service.updateAllStock();
-        return "redirect:/products";
+        return "redirect:/market/products";
     }
 }

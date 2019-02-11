@@ -16,7 +16,8 @@ import java.util.Map;
 @Repository
 public class InMemoryProductRepository implements ProductRepository {
     private static final String SELECT_ALL = "SELECT * FROM PRODUCTS";
-    private static final String UPDATE_STOCK = "UPDATE PRODUCTS SET UNITS_IN_STOCK = :unitsInStock WHERE id = :id";
+    private static final String SELECT_BY_CATEGORY = "SELECT * FROM PRODUCTS WHERE CATEGORY = :category";
+    private static final String UPDATE_STOCK = "UPDATE PRODUCTS SET UNITS_IN_STOCK = :unitsInStock WHERE ID = :id";
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -27,6 +28,12 @@ public class InMemoryProductRepository implements ProductRepository {
     @Override
     public List<Product> getAllProducts() {
         return jdbcTemplate.query(SELECT_ALL, Collections.emptyMap(), new ProductMapper());
+    }
+
+    @Override
+    public List<Product> getProductsByCategory(final String category) {
+        final Map<String, String> params = Collections.singletonMap("category", category);
+        return jdbcTemplate.query(SELECT_BY_CATEGORY, params, new ProductMapper());
     }
 
     @Override

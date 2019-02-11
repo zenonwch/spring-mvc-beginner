@@ -24,6 +24,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> getProductsByCategory(final String category) {
+        return repository.getProductsByCategory(category);
+    }
+
+    @Override
     @Transactional
     public void updateAllStock() {
         final Consumer<Product> updateUnitsInStock = product ->
