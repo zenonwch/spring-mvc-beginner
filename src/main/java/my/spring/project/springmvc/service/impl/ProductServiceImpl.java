@@ -4,8 +4,10 @@ import my.spring.project.springmvc.domain.Product;
 import my.spring.project.springmvc.domain.repository.ProductRepository;
 import my.spring.project.springmvc.service.ProductService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -17,15 +19,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> getAllProducts() {
+        return repository.getAllProducts();
+    }
+
+    @Override
+    @Transactional
     public void updateAllStock() {
-        final List<Product> allProducts = repository.getAllProducts();
+        final Consumer<Product> updateUnitsInStock = product ->
+                repository.updateStock(product.getProductId(), product.getUnitsInStock() + 100);
 
-        for (final Product product : allProducts) {
-            final long unitsInStock = product.getUnitsInStock();
-
-            if (unitsInStock < 500) {
-                repository.updateStock(product.getProductId(), unitsInStock + 100);
-            }
-        }
+        repository.getAllProducts().stream()
+                .filter(product -> product.getUnitsInStock() < 500)
+                .forEach(updateUnitsInStock);
     }
 }
