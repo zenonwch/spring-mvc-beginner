@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 @Service
@@ -26,6 +27,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getProductsByCategory(final String category) {
         return repository.getProductsByCategory(category);
+    }
+
+    @Override
+    public List<Product> getProductsByFilter(final Map<String, List<String>> filterParams) {
+        return repository.getProductsByFilter(filterParams);
     }
 
     @Override
