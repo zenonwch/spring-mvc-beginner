@@ -10,6 +10,7 @@ import java.util.List;
 
 @Controller
 public class ProductController {
+
     private final ProductService service;
 
     public ProductController(final ProductService service) {
