@@ -19,16 +19,18 @@
 		</section>
 		<section class="container">
 			<div class="row">
-				<div class="col-sm-6 col-md-3" style="padding-bottom: 15px;">
-					<div class="card">
-						<div class="card-body p-3">
-							<h3 class="card-title text-center"><c:out value="${product.name}"/></h3>
-							<p class="card-text"><c:out value="${product.description}"/></p>
-							<p class="card-text text-center"><c:out value="${product.unitPrice}"/> USD</p>
-							<p class="card-text">Available ${product.unitsInStock} units in stock</p>
+				<c:forEach items="${products}" var="product">
+					<div class="col-sm-6 col-md-3" style="padding-bottom: 15px;">
+						<div class="card">
+							<div class="card-body p-3">
+								<h3 class="card-title text-center"><c:out value="${product.name}"/></h3>
+								<p class="card-text"><c:out value="${product.description}"/></p>
+								<p class="card-text text-center">$<c:out value="${product.unitPrice}"/></p>
+								<p class="card-text">Available ${product.unitsInStock} units in stock</p>
+							</div>
 						</div>
 					</div>
-				</div>
+				</c:forEach>
 			</div>
 		</section>
 	</body>

@@ -1,24 +1,26 @@
 package my.spring.project.springmvc.controller;
 
 import my.spring.project.springmvc.domain.Product;
+import my.spring.project.springmvc.domain.repository.ProductRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 @Controller
 public class ProductController {
+    private final ProductRepository repository;
+
+    public ProductController(final ProductRepository repository) {
+        this.repository = repository;
+    }
 
     @GetMapping("/products")
     public String list(final Model model) {
-        final Product iPhone = new Product("P1234", "iPhone XS", new BigDecimal(1500));
-        iPhone.setDescription("Apple iPhone XS smartphone with 5.8-inches 1125 x 2436 display and 12MP main camera");
-        iPhone.setCategory("Smartphone");
-        iPhone.setManufacturer("Apple");
-        iPhone.setUnitsInStock(1000);
+        final List<Product> products = repository.getAllProducts();
 
-        model.addAttribute("product", iPhone);
+        model.addAttribute("products", products);
         return "products";
     }
 }
