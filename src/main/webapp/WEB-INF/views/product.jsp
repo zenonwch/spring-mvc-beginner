@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html lang="en">
 	<head>
 		<title>Products</title>
@@ -10,6 +11,7 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
 		      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
 		      crossorigin="anonymous">
+		<link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>">
 	</head>
 	<body>
 		<section>
@@ -40,12 +42,20 @@
 							<p class="card-text">
 								<strong>Available units in stock :</strong> <c:out value="${product.unitsInStock}"/>
 							</p>
-							<h4><c:out value="${product.unitPrice}"/> USD</h4>
-							<p>
-								<a href="#" class="btn btn-warning btn-large">
-									<span class="text-white"><i class="fas fa-shopping-cart fa-flip-horizontal"></i> Order Now</span>
+							<h4 class="pb-3"><c:out value="${product.unitPrice}"/> USD</h4>
+							<div class="row justify-content-center">
+								<a href="#" class="btn btn-warning btn-large mr-3">
+									<span class="text-white">
+										<i class="fas fa-shopping-cart fa-flip-horizontal"></i> Order Now
+									</span>
+								</a><!--
+								--><a href="<spring:url value="/market/products"/>"
+								      class="btn btn-light btn-large border text-secondary">
+									<span>
+										<i class="far fa-hand-pointer rotate-270-flip-horizontal"></i> Back
+									</span>
 								</a>
-							</p>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -1,0 +1,6 @@
+.rotate-270-flip-horizontal {
+    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1, mirror=1)";
+    -webkit-transform: rotate(270deg) scale(-1, 1);
+    -ms-transform: rotate(270deg) scale(-1, 1);
+    transform: rotate(270deg) scale(-1, 1);
+}
