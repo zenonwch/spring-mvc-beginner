@@ -18,6 +18,7 @@ public class InMemoryProductRepository implements ProductRepository {
     private static final String SELECT_ALL = "SELECT * FROM PRODUCTS";
     private static final String SELECT_BY_CATEGORY = "SELECT * FROM PRODUCTS WHERE CATEGORY = :category";
     private static final String SELECT_BY_FILTER = "SELECT * FROM PRODUCTS WHERE CATEGORY IN (:categories) AND MANUFACTURER IN (:brands)";
+    private static final String SELECT_BY_ID = "SELECT * FROM PRODUCTS WHERE ID = :id";
     private static final String UPDATE_STOCK = "UPDATE PRODUCTS SET UNITS_IN_STOCK = :unitsInStock WHERE ID = :id";
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
@@ -40,6 +41,11 @@ public class InMemoryProductRepository implements ProductRepository {
     @Override
     public List<Product> getProductsByFilter(final Map<String, List<String>> filterParams) {
         return jdbcTemplate.query(SELECT_BY_FILTER, filterParams, new ProductMapper());
+    }
+
+    @Override
+    public Product getProductById(final String productId) {
+        return jdbcTemplate.queryForObject(SELECT_BY_ID, Collections.singletonMap("id", productId), new ProductMapper());
     }
 
     @Override
