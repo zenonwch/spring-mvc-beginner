@@ -6,6 +6,7 @@ import my.spring.project.springmvc.service.ProductService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -32,6 +33,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getProductsByFilter(final Map<String, List<String>> filterParams) {
         return repository.getProductsByFilter(filterParams);
+    }
+
+    @Override
+    public List<Product> filterProducts(final String category, final String brand, final Map<String, BigDecimal> price) {
+        return repository.filterProducts(category, brand, price);
     }
 
     @Override
