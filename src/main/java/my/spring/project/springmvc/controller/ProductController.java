@@ -49,6 +49,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/{category}/{params}")
+    @SuppressWarnings("MVCPathVariableInspection")
     public String filterProducts(
             @PathVariable final String category,
             @MatrixVariable(pathVar = "params") final Map<String, BigDecimal> price,
@@ -66,6 +67,20 @@ public class ProductController {
 
         model.addAttribute("product", product);
         return "product";
+    }
+
+    @GetMapping("/products/add")
+    public String getAddNewProductForm(final Model model) {
+        model.addAttribute("newProduct", new Product());
+
+        return "addProduct";
+    }
+
+    @PostMapping("/products/add")
+    public String processAddNewProductForm(@ModelAttribute("newProduct") final Product product) {
+        service.addProduct(product);
+
+        return "redirect:/market/products";
     }
 
     @GetMapping("/update/stock")

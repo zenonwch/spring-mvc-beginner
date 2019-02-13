@@ -22,6 +22,8 @@ public class InMemoryProductRepository implements ProductRepository {
     private static final String SELECT_BY_ID = "SELECT * FROM PRODUCTS WHERE ID = :id";
     private static final String SELECT_BY_CATEGORY_BRAND_PRICE =
             "SELECT * FROM PRODUCTS WHERE CATEGORY = :category AND MANUFACTURER = :brand AND UNIT_PRICE BETWEEN :low AND :high";
+    private static final String INSERT = "INSERT INTO PRODUCTS VALUES " +
+            "(:id, :name, :desc, :price, :manufacturer, :category, :condition, :inStock, :inOrder, :discontinued)";
     private static final String UPDATE_STOCK = "UPDATE PRODUCTS SET UNITS_IN_STOCK = :unitsInStock WHERE ID = :id";
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
@@ -61,12 +63,35 @@ public class InMemoryProductRepository implements ProductRepository {
     }
 
     @Override
+    public void addProduct(final Product product) {
+        final Map<String, Object> params = composeParams(product);
+
+        jdbcTemplate.update(INSERT, params);
+    }
+
+    @Override
     public void updateStock(final String productId, final long noOfUnits) {
         final Map<String, Object> params = new HashMap<>();
         params.put("unitsInStock", noOfUnits);
         params.put("id", productId);
 
         jdbcTemplate.update(UPDATE_STOCK, params);
+    }
+
+    private Map<String, Object> composeParams(final Product product) {
+        final Map<String, Object> params = new HashMap<>();
+        params.put("id", product.getProductId());
+        params.put("name", product.getName());
+        params.put("desc", product.getDescription());
+        params.put("price", product.getUnitPrice());
+        params.put("manufacturer", product.getManufacturer());
+        params.put("category", product.getCategory());
+        params.put("condition", product.getCondition());
+        params.put("inStock", product.getUnitsInStock());
+        params.put("inOrder", product.getUnitsInOrder());
+        params.put("discontinued", product.isDiscontinued());
+
+        return params;
     }
 
     private static final class ProductMapper implements RowMapper<Product> {
