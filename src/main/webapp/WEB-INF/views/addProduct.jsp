@@ -65,20 +65,6 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-form-label col-lg-2 text-right" for="unitsInOrder">Units in Order</label>
-						<div class="col-lg-3">
-							<form:input path="unitsInOrder" id="unitsInOrder" type="number" class="form-control"/>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-lg-2 text-right" for="discontinued">Discontinued</label>
-						<div class="col-lg-3">
-							<div class="form-check">
-								<form:checkbox path="discontinued" id="discontinued" cssClass="form-check-input"/>
-							</div>
-						</div>
-					</div>
-					<div class="form-group row">
 						<label class="col-lg-2 text-right">Condition</label>
 						<div class="col-lg-3">
 							<div class="form-check form-check-inline">

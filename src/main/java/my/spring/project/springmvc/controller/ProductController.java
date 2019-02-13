@@ -4,6 +4,8 @@ import my.spring.project.springmvc.domain.Product;
 import my.spring.project.springmvc.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -77,7 +79,14 @@ public class ProductController {
     }
 
     @PostMapping("/products/add")
-    public String processAddNewProductForm(@ModelAttribute("newProduct") final Product product) {
+    public String processAddNewProductForm(final BindingResult result,
+                                           @ModelAttribute("newProduct") final Product product) {
+
+        final String[] suppressedFields = result.getSuppressedFields();
+        if (suppressedFields.length > 0) {
+            throw new RuntimeException("Attempting to bind disallowed fields: " + String.join(",", suppressedFields));
+        }
+
         service.addProduct(product);
 
         return "redirect:/market/products";
@@ -87,5 +96,11 @@ public class ProductController {
     public String updateStock() {
         service.updateAllStock();
         return "redirect:/market/products";
+    }
+
+    @InitBinder
+    public void initBinder(final WebDataBinder binder) {
+        binder.setAllowedFields("productId", "name", "unitPrice", "description",
+                "manufacturer", "category", "unitsInStock", "condition");
     }
 }
