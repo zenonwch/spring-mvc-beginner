@@ -9,11 +9,15 @@ import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class InMemoryCustomerRepository implements CustomerRepository {
     private static final String SELECT_ALL = "SELECT * FROM CUSTOMERS";
+    private static final String INSERT = "INSERT INTO CUSTOMERS VALUES " +
+            "(:id, :name, :address, :ordersMade)";
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -24,6 +28,23 @@ public class InMemoryCustomerRepository implements CustomerRepository {
     @Override
     public List<Customer> getAllCustomers() {
         return jdbcTemplate.query(SELECT_ALL, Collections.emptyMap(), new CustomerMapper());
+    }
+
+    @Override
+    public void addCustomer(final Customer customer) {
+        final Map<String, Object> params = composeParams(customer);
+
+        jdbcTemplate.update(INSERT, params);
+    }
+
+    private Map<String, Object> composeParams(final Customer customer) {
+        final Map<String, Object> params = new HashMap<>();
+        params.put("id", customer.getCustomerId());
+        params.put("name", customer.getName());
+        params.put("address", customer.getAddress());
+        params.put("ordersMade", customer.getNoOfOrdersMade());
+
+        return params;
     }
 
     private static final class CustomerMapper implements RowMapper<Customer> {

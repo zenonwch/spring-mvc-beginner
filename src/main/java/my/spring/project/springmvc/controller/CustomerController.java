@@ -5,6 +5,8 @@ import my.spring.project.springmvc.service.CustomerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -23,5 +25,17 @@ public class CustomerController {
 
         model.addAttribute("customers", customers);
         return "customers";
+    }
+
+    @GetMapping("/customers/add")
+    public String getAddNewCustomerForm(@ModelAttribute("newCustomer") final Customer customer) {
+        return "addCustomer";
+    }
+
+    @PostMapping("/customers/add")
+    public String processAddNewCustomerForm(@ModelAttribute("newCustomer") final Customer customer) {
+        service.addCustomer(customer);
+
+        return "redirect:/customers";
     }
 }
