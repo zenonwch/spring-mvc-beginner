@@ -12,6 +12,8 @@
 		      integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
 		      crossorigin="anonymous">
 		<link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>">
+		<link rel="shortcut icon" href="<c:url value="/resources/favicon.ico" />" type="image/x-icon">
+		<link rel="icon" href="<c:url value="/resources/favicon.ico" />" type="image/x-icon">
 	</head>
 	<body>
 		<section>
