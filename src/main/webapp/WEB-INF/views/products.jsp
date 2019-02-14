@@ -1,3 +1,5 @@
+<%--suppress JSUnusedGlobalSymbols --%>
+<%--@elvariable id="noImage" type="my.spring.project.springmvc.controller.NoImageAdvice"--%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -31,9 +33,11 @@
 							<div class="container">
 								<div class="row" style="height: 200px;">
 									<div class="col text-center align-self-center">
+											<%--suppress JSUnusedGlobalSymbols --%>
 										<img class="img-fluid pt-3"
 										     style="max-height: 200px;"
-										     src="<c:url value="/img/${product.productId}.png"></c:url>"
+										     src="<c:url value="/img/${product.productId}.png"/>"
+										     onerror="this.onerror=null; this.src='<c:url value="/img/${noImage}"/>'"
 										     alt="<c:out value="${product.name}"/>"/>
 									</div>
 								</div>

@@ -28,6 +28,7 @@ public class Product implements Serializable {
     private boolean discontinued;
     private String condition;
     private transient MultipartFile productImage;
+    private transient MultipartFile productGuide;
 
     public Product(final String productId, final String name, final BigDecimal unitPrice) {
         this.productId = productId;

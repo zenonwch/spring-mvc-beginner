@@ -33,6 +33,7 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/img/**").addResourceLocations("/resources/images/");
+        registry.addResourceHandler("/pdf/**").addResourceLocations("/resources/pdf/");
     }
 
     @Bean
