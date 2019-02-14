@@ -6,8 +6,8 @@
 	<head>
 		<title><spring:message code="products.page.title"/></title>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-		      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 		      crossorigin="anonymous">
 		<link rel="shortcut icon" href="<c:url value="/resources/favicon.ico" />" type="image/x-icon">
 		<link rel="icon" href="<c:url value="/resources/favicon.ico" />" type="image/x-icon">
@@ -22,7 +22,7 @@
 			</div>
 		</section>
 		<section class="container">
-			<form:form method="post" modelAttribute="newProduct" class="form-horizontal">
+			<form:form method="post" modelAttribute="newProduct" class="form-horizontal" enctype="multipart/form-data">
 				<fieldset>
 					<legend class="col-lg-6 border-bottom pl-0 mb-4">
 						<spring:message code="addProduct.form.legend"/>
@@ -102,6 +102,23 @@
 								<form:radiobutton path="condition" id="conditionRef" value="Refurbished"
 								                  cssClass="form-check-input"/>
 								<spring:message code="addProduct.form.condition.ref.label"/>
+							</div>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-lg-2 text-right">
+							<spring:message code="addProduct.form.productImg.label"/>
+						</label>
+						<div class="col-lg-3">
+							<div class="custom-file">
+								<form:input path="productImage" id="productImage" type="file"
+								            cssClass="custom-file-input" onchange="(function(){
+								            document.getElementById('productImageLabel').innerText = document.getElementById('productImage').files[0].name
+								            })()"/>
+								<label id="productImageLabel" class="custom-file-label" for="productImage"
+								       data-browse="<spring:message code="addProduct.form.productImg.button"/>">
+									<spring:message code="addProduct.form.productImg.placeholder"/>
+								</label>
 							</div>
 						</div>
 					</div>

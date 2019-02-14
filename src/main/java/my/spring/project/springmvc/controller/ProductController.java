@@ -7,8 +7,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
@@ -79,12 +84,21 @@ public class ProductController {
     }
 
     @PostMapping("/products/add")
-    public String processAddNewProductForm(final BindingResult result,
-                                           @ModelAttribute("newProduct") final Product product) {
+    public String processAddNewProductForm(@ModelAttribute("newProduct") final Product product,
+                                           final BindingResult result,
+                                           final HttpServletRequest request) {
 
         final String[] suppressedFields = result.getSuppressedFields();
         if (suppressedFields.length > 0) {
             throw new RuntimeException("Attempting to bind disallowed fields: " + String.join(",", suppressedFields));
+        }
+
+        final MultipartFile productImage = product.getProductImage();
+
+        if (productImage != null && !productImage.isEmpty()) {
+            final String rootDir = request.getSession().getServletContext().getRealPath("/");
+            final Path destination = Paths.get(rootDir, "resources", "images", product.getProductId() + ".png");
+            uploadFile(productImage, destination);
         }
 
         service.addProduct(product);
@@ -101,6 +115,14 @@ public class ProductController {
     @InitBinder
     public void initBinder(final WebDataBinder binder) {
         binder.setAllowedFields("productId", "name", "unitPrice", "description",
-                "manufacturer", "category", "unitsInStock", "condition");
+                "manufacturer", "category", "unitsInStock", "condition", "productImage");
+    }
+
+    private void uploadFile(final MultipartFile productImage, final Path destination) {
+        try {
+            productImage.transferTo(destination);
+        } catch (final IOException e) {
+            throw new RuntimeException("Product image saving failed", e);
+        }
     }
 }

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -26,6 +27,7 @@ public class Product implements Serializable {
     private long unitsInOrder;
     private boolean discontinued;
     private String condition;
+    private transient MultipartFile productImage;
 
     public Product(final String productId, final String name, final BigDecimal unitPrice) {
         this.productId = productId;
