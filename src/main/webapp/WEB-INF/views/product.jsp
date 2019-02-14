@@ -25,49 +25,59 @@
 		</section>
 		<section class="container">
 			<div class="row">
-				<div class="col-md-5">
+				<div class="col-md-10">
 					<div class="card">
-						<div class="card-body p-3">
-							<h3 class="card-title text-center"><c:out value="${product.name}"/></h3>
-							<p class="card-text"><c:out value="${product.description}"/></p>
-							<p class="card-text">
-								<strong><spring:message code="product.card.productId.label"/> :</strong>
-								<span class="badge badge-warning text-white"> <!--
+						<div class="row no-gutters">
+							<div class="col-md-5 text-center align-self-center">
+								<img class="img-fluid p-3"
+								     style="max-height: 400px;"
+								     src="<c:url value="/img/${product.productId}.png"></c:url>"
+								     alt="<c:out value="${product.name}"/>"/>
+							</div>
+							<div class="col">
+								<div class="card-block p-3">
+									<h3 class="card-title text-center"><c:out value="${product.name}"/></h3>
+									<p class="card-text"><c:out value="${product.description}"/></p>
+									<p class="card-text">
+										<strong><spring:message code="product.card.productId.label"/> :</strong>
+										<span class="badge badge-warning text-white"> <!--
 									--><c:out value="${product.productId}"/></span>
-							</p>
-							<p class="card-text">
-								<strong>
-									<spring:message code="product.card.brand.label"/> :
-								</strong> <c:out value="${product.manufacturer}"/>
-							</p>
-							<p class="card-text">
-								<strong>
-									<spring:message code="product.card.category.label"/> :
-								</strong> <c:out value="${product.category}"/>
-							</p>
-							<p class="card-text">
-								<strong>
-									<spring:message code="product.card.unitsInStock.label"/> :
-								</strong> <c:out value="${product.unitsInStock}"/>
-							</p>
-							<h4 class="pb-3">
-								<c:out value="${product.unitPrice}"/> <!--
+									</p>
+									<p class="card-text">
+										<strong>
+											<spring:message code="product.card.brand.label"/> :
+										</strong> <c:out value="${product.manufacturer}"/>
+									</p>
+									<p class="card-text">
+										<strong>
+											<spring:message code="product.card.category.label"/> :
+										</strong> <c:out value="${product.category}"/>
+									</p>
+									<p class="card-text">
+										<strong>
+											<spring:message code="product.card.unitsInStock.label"/> :
+										</strong> <c:out value="${product.unitsInStock}"/>
+									</p>
+									<h4 class="pb-3">
+										<c:out value="${product.unitPrice}"/> <!--
 								--><spring:message code="product.card.currencyCode"/>
-							</h4>
-							<div class="row justify-content-center">
-								<a href="#" class="btn btn-warning btn-large mr-3">
+									</h4>
+									<div class="row justify-content-center">
+										<a href="#" class="btn btn-warning btn-large mr-3">
 									<span class="text-white">
 										<i class="fas fa-shopping-cart fa-flip-horizontal"></i> <!--
 										--><spring:message code="product.card.orderNow.button"/>
 									</span>
-								</a><!--
+										</a><!--
 								--><a href="<spring:url value="/market/products"/>"
-								      class="btn btn-light btn-large border text-secondary">
+                                      class="btn btn-light btn-large border text-secondary">
 									<span>
 										<i class="far fa-hand-pointer rotate-270-flip-horizontal"></i> <!--
 										--><spring:message code="product.card.back.button"/>
 									</span>
-							</a>
+									</a>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>

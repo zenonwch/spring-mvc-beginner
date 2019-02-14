@@ -27,7 +27,17 @@
 			<div class="row">
 				<c:forEach items="${products}" var="product">
 					<div class="col-sm-6 col-md-3" style="padding-bottom: 15px;">
-						<div class="card">
+						<div class="card d-block">
+							<div class="container">
+								<div class="row" style="height: 200px;">
+									<div class="col text-center align-self-center">
+										<img class="img-fluid pt-3"
+										     style="max-height: 200px;"
+										     src="<c:url value="/img/${product.productId}.png"></c:url>"
+										     alt="<c:out value="${product.name}"/>"/>
+									</div>
+								</div>
+							</div>
 							<div class="card-body p-3">
 								<h3 class="card-title text-center"><c:out value="${product.name}"/></h3>
 								<p class="card-text"><c:out value="${product.description}"/></p>
