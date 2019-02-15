@@ -3,6 +3,7 @@ package my.spring.project.springmvc.config;
 import com.thoughtworks.xstream.XStream;
 import my.spring.project.springmvc.domain.Customer;
 import my.spring.project.springmvc.domain.Product;
+import my.spring.project.springmvc.interceptor.ProcessingTimeLogInterceptor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -46,6 +47,11 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/img/**").addResourceLocations("/resources/images/");
         registry.addResourceHandler("/pdf/**").addResourceLocations("/resources/pdf/");
+    }
+
+    @Override
+    public void addInterceptors(final InterceptorRegistry registry) {
+        registry.addInterceptor(new ProcessingTimeLogInterceptor());
     }
 
     @Bean
