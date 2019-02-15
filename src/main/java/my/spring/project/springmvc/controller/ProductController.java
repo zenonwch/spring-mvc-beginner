@@ -1,6 +1,7 @@
 package my.spring.project.springmvc.controller;
 
 import my.spring.project.springmvc.domain.Product;
+import my.spring.project.springmvc.exception.ProductNotFoundException;
 import my.spring.project.springmvc.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,6 +44,10 @@ public class ProductController {
     @GetMapping("/products/{category}")
     public String getProductsByCategory(@PathVariable final String category, final Model model) {
         final List<Product> products = service.getProductsByCategory(category);
+
+        if (products == null || products.isEmpty()) {
+            throw new ProductNotFoundException("No products for the category '" + category + "' was found.");
+        }
 
         model.addAttribute("products", products);
         return "products";

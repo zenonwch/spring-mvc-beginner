@@ -2,6 +2,8 @@ package my.spring.project.springmvc.domain.repository.impl;
 
 import my.spring.project.springmvc.domain.Product;
 import my.spring.project.springmvc.domain.repository.ProductRepository;
+import my.spring.project.springmvc.exception.ProductNotFoundException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -59,7 +61,11 @@ public class InMemoryProductRepository implements ProductRepository {
 
     @Override
     public Product getProductById(final String productId) {
-        return jdbcTemplate.queryForObject(SELECT_BY_ID, Collections.singletonMap("id", productId), new ProductMapper());
+        try {
+            return jdbcTemplate.queryForObject(SELECT_BY_ID, Collections.singletonMap("id", productId), new ProductMapper());
+        } catch (final DataAccessException ignore) {
+            throw new ProductNotFoundException("There is no product found wit the Product Id = " + productId);
+        }
     }
 
     @Override
