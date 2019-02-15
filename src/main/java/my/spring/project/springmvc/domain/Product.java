@@ -1,5 +1,6 @@
 package my.spring.project.springmvc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,7 +28,9 @@ public class Product implements Serializable {
     private long unitsInOrder;
     private boolean discontinued;
     private String condition;
+    @JsonIgnore
     private transient MultipartFile productImage;
+    @JsonIgnore
     private transient MultipartFile productGuide;
 
     public Product(final String productId, final String name, final BigDecimal unitPrice) {
