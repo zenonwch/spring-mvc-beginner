@@ -4,6 +4,7 @@ import com.thoughtworks.xstream.XStream;
 import my.spring.project.springmvc.domain.Customer;
 import my.spring.project.springmvc.domain.Product;
 import my.spring.project.springmvc.interceptor.ProcessingTimeLogInterceptor;
+import my.spring.project.springmvc.interceptor.PromoCodeInterceptor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,6 +13,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.oxm.xstream.XStreamMarshaller;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
@@ -60,6 +62,9 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         final LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
         localeChangeInterceptor.setParamName("language");
         registry.addInterceptor(localeChangeInterceptor);
+
+        final HandlerInterceptor promoCodeInterceptor = promoCodeInterceptor();
+        registry.addInterceptor(promoCodeInterceptor).addPathPatterns("/**/market/products/specialOffer");
     }
 
     @Bean
@@ -128,5 +133,15 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         messageSource.setBasename("messages");
 
         return messageSource;
+    }
+
+    @Bean
+    public HandlerInterceptor promoCodeInterceptor() {
+        final PromoCodeInterceptor interceptor = new PromoCodeInterceptor();
+        interceptor.setPromoCode("OFF3R");
+        interceptor.setOfferRedirect("market/products");
+        interceptor.setErrorRedirect("invalidPromoCode");
+
+        return interceptor;
     }
 }

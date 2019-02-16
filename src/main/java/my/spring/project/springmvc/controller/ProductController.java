@@ -112,6 +112,11 @@ public class ProductController {
         return "redirect:/market/products";
     }
 
+    @GetMapping("/products/invalidPromoCode")
+    public String invalidPromoCode() {
+        return "invalidPromoCode";
+    }
+
     @GetMapping("/update/stock")
     public String updateStock() {
         service.updateAllStock();
