@@ -12,8 +12,11 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.oxm.xstream.XStreamMarshaller;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
@@ -23,6 +26,7 @@ import org.springframework.web.util.UrlPathHelper;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Locale;
 
 @Configuration
 @EnableWebMvc
@@ -52,6 +56,10 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
         registry.addInterceptor(new ProcessingTimeLogInterceptor());
+
+        final LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+        localeChangeInterceptor.setParamName("language");
+        registry.addInterceptor(localeChangeInterceptor);
     }
 
     @Bean
@@ -72,6 +80,14 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         multipartResolver.setMaxUploadSizePerFile(10_485_760); // 10 MB
 
         return multipartResolver;
+    }
+
+    @Bean
+    public LocaleResolver localeResolver() {
+        final SessionLocaleResolver resolver = new SessionLocaleResolver();
+        resolver.setDefaultLocale(new Locale("en"));
+
+        return resolver;
     }
 
     @Bean

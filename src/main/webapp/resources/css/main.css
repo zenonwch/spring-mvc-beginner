@@ -4,3 +4,23 @@
     -ms-transform: rotate(270deg) scale(-1, 1);
     transform: rotate(270deg) scale(-1, 1);
 }
+
+/*flags*/
+.flag {
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    background: url('../icons/flags.png') no-repeat;
+}
+
+.flag.flag-by {
+    background-position: -48px 0;
+}
+
+.flag.flag-gb {
+    background-position: 0 -48px;
+}
+
+.flag.flag-ru {
+    background-position: -48px -48px;
+}
