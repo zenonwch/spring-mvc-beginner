@@ -146,6 +146,12 @@
 						<div class="offset-lg-2 col-lg-3">
 							<input type="submit" id="btnAdd" class="btn btn-primary"
 							       value="<spring:message code="addProduct.form.submit.button"/>"/>
+							<div class="btn btn-light btn-large border text-secondary" onclick="window.history.back()">
+								<span>
+									<i class="far fa-hand-pointer rotate-270-flip-horizontal"></i>
+									<spring:message code="product.card.back.button"/>
+								</span>
+							</div>
 						</div>
 					</div>
 				</fieldset>
