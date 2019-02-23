@@ -36,8 +36,6 @@
 
         <!-- Servlet API -->
         <servlet.api.version>4.0.1</servlet.api.version>
-        <!-- Tomcat Catalina added for avoiding web.xml with jsp-config -->
-        <tomcat.catalina.version>9.0.16</tomcat.catalina.version>
 
         <!-- JSP -->
         <jstl.version>1.2</jstl.version>
@@ -138,31 +136,6 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>${servlet.api.version}</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-catalina</artifactId>
-            <version>${tomcat.catalina.version}</version>
-            <scope>provided</scope>
-            <exclusions>
-                <!-- catalina.core package needed only for reflection -->
-                <exclusion>
-                    <groupId>*</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-api</artifactId>
-            <version>${tomcat.catalina.version}</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>*</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
