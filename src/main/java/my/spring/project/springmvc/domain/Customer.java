@@ -4,15 +4,25 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 @Getter
 @Setter
 @ToString
 public class Customer {
+    @Pattern(regexp = "C[0-9]+", message = "{pattern.customer.customerId.validation}")
     private String customerId;
+
+    @NotBlank(message = "{pattern.customer.name.validation}")
     private String name;
+
+    @NotBlank(message = "{pattern.customer.address.validation}")
     private String address;
+
+    @Min(value = 0, message = "{pattern.customer.madeOrders.validation}")
     private long noOfOrdersMade;
 
     @Override

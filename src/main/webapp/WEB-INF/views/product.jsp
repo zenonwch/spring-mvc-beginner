@@ -1,19 +1,17 @@
-<%--suppress JSUnusedGlobalSymbols --%>
-<%--@elvariable id="noImage" type="my.spring.project.springmvc.controller.NoImageAdvice"--%>
-<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<html lang="en">
+
+<html lang="<spring:message code="app.language"/>">
 	<head>
+		<jsp:include page="components/head.jsp"/>
 		<title><c:out value="${product.name}"/></title>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<jsp:include page="head.jsp"/>
 	</head>
 	<body>
 		<section>
 			<div class="jumbotron">
 				<div class="container">
-					<jsp:include page="langSelector.jsp"/>
+					<jsp:include page="components/langSelector.jsp"/>
 					<h1><spring:message code="products.page.title"/></h1>
 				</div>
 			</div>
@@ -24,11 +22,13 @@
 					<div class="card">
 						<div class="row no-gutters">
 							<div class="col-md-5 text-center align-self-center">
-								<img class="img-fluid p-3"
-								     style="max-height: 400px;"
-								     src="<c:url value="/img/${product.productId}.png"/>"
-								     onerror="this.onerror=null;this.src='<c:url value="/img/${noImage}"/>'"
-								     alt="<c:out value="${product.name}"/>"/>
+								<jsp:include page="components/image.jsp">
+									<jsp:param name="imageFileName"
+									           value="${fn:escapeXml(product.productId)}.png"/>
+									<jsp:param name="imageName"
+									           value="${fn:escapeXml(product.name)}"/>
+									<jsp:param name="style" value="max-height: 400px;"/>
+								</jsp:include>
 							</div>
 							<div class="col">
 								<div class="card-block p-3">
@@ -69,7 +69,7 @@
                                       class="btn btn-light btn-large border text-secondary">
 									<span>
 										<i class="far fa-hand-pointer rotate-270-flip-horizontal"></i> <!--
-										--><spring:message code="product.card.back.button"/>
+										--><spring:message code="back.button"/>
 									</span>
 									</a>
 									</div>

@@ -1,19 +1,17 @@
-<%--suppress JSUnusedGlobalSymbols --%>
-<%--@elvariable id="noImage" type="my.spring.project.springmvc.controller.NoImageAdvice"--%>
-<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<html lang="en">
+
+<html lang="<spring:message code="app.language"/>">
 	<head>
+		<jsp:include page="components/head.jsp"/>
 		<title><spring:message code="products.page.title"/></title>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<jsp:include page="head.jsp"/>
 	</head>
 	<body>
 		<section>
 			<div class="jumbotron">
 				<div class="container">
-					<jsp:include page="langSelector.jsp"/>
+					<jsp:include page="components/langSelector.jsp"/>
 					<h1><spring:message code="products.page.title"/></h1>
 					<p><spring:message code="products.page.description"/></p>
 				</div>
@@ -27,12 +25,13 @@
 							<div class="container">
 								<div class="row" style="height: 200px;">
 									<div class="col text-center align-self-center">
-											<%--suppress JSUnusedGlobalSymbols --%>
-										<img class="img-fluid pt-3"
-										     style="max-height: 200px;"
-										     src="<c:url value="/img/${product.productId}.png"/>"
-										     onerror="this.onerror=null; this.src='<c:url value="/img/${noImage}"/>'"
-										     alt="<c:out value="${product.name}"/>"/>
+										<jsp:include page="components/image.jsp">
+											<jsp:param name="imageFileName"
+											           value="${fn:escapeXml(product.productId)}.png"/>
+											<jsp:param name="imageName"
+											           value="${fn:escapeXml(product.name)}"/>
+											<jsp:param name="style" value="max-height: 200px;"/>
+										</jsp:include>
 									</div>
 								</div>
 							</div>

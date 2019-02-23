@@ -1,18 +1,17 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<html lang="en">
+
+<html lang="<spring:message code="app.language"/>">
 	<head>
+		<jsp:include page="components/head.jsp"/>
 		<title><spring:message code="products.page.title"/></title>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<jsp:include page="head.jsp"/>
 	</head>
 	<body>
 		<section>
 			<div class="jumbotron">
 				<div class="container">
-					<jsp:include page="langSelector.jsp"/>
+					<jsp:include page="components/langSelector.jsp"/>
 					<h1><spring:message code="products.page.title"/></h1>
 					<p><spring:message code="addProduct.page.description"/></p>
 				</div>
@@ -20,8 +19,15 @@
 		</section>
 		<section class="container">
 			<form:form method="post" modelAttribute="newProduct" class="form-horizontal" enctype="multipart/form-data">
+				<form:errors path="*" cssClass="alert alert-danger col-lg-8" element="div"/>
+				<c:set var="messages"> {
+					'valueMissing':'<spring:message code="invalid.field.text.empty"/>',
+					'rangeUnderflow':'<spring:message code="invalid.field.number.negative"/>',
+					'badInput':'<spring:message code="invalid.field.number.NaN"/>',
+					}
+				</c:set>
 				<fieldset>
-					<legend class="col-lg-6 border-bottom pl-0 mb-4">
+					<legend class="col-lg-8 border-bottom pl-0 mb-4">
 						<spring:message code="addProduct.form.legend"/>
 					</legend>
 					<div class="form-group row">
@@ -30,7 +36,11 @@
 						</label>
 						<div class="col-lg-3">
 							<form:input path="productId" id="productId" type="text" class="form-control"
-							            required="true"/>
+							            required="true" oninput="onInput(this)"
+							            oninvalid="onInvalid(this, ${messages})"/>
+						</div>
+						<div class="col-lg-3 px-0">
+							<form:errors path="productId" cssClass="text-danger"/>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -38,7 +48,12 @@
 							<spring:message code="addProduct.form.name.label"/>
 						</label>
 						<div class="col-lg-3">
-							<form:input path="name" id="name" type="text" class="form-control" required="true"/>
+							<form:input path="name" id="name" type="text" class="form-control"
+							            required="true" oninput="onInput(this)"
+							            oninvalid="onInvalid(this, ${messages})"/>
+						</div>
+						<div class="col-lg-3 px-0">
+							<form:errors path="name" cssClass="text-danger"/>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -55,7 +70,11 @@
 						</label>
 						<div class="col-lg-3">
 							<form:input path="unitPrice" id="unitPrice" type="number" class="form-control"
-							            required="true"/>
+							            required="true" value="0" min="0" oninput="onInput(this)"
+							            oninvalid="onInvalid(this, ${messages})"/>
+						</div>
+						<div class="col-lg-3 px-0">
+							<form:errors path="unitPrice" cssClass="text-danger"/>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -64,7 +83,11 @@
 						</label>
 						<div class="col-lg-3">
 							<form:input path="manufacturer" id="manufacturer" type="text" class="form-control"
-							            required="true"/>
+							            required="true" oninput="onInput(this)"
+							            oninvalid="onInvalid(this, ${messages})"/>
+						</div>
+						<div class="col-lg-3 px-0">
+							<form:errors path="manufacturer" cssClass="text-danger"/>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -72,7 +95,12 @@
 							<spring:message code="addProduct.form.category.label"/>
 						</label>
 						<div class="col-lg-3">
-							<form:input path="category" id="category" type="text" class="form-control" required="true"/>
+							<form:input path="category" id="category" type="text" class="form-control"
+							            required="required" oninput="onInput(this)"
+							            oninvalid="onInvalid(this, ${messages})"/>
+						</div>
+						<div class="col-lg-3 px-0">
+							<form:errors path="category" cssClass="text-danger"/>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -81,7 +109,11 @@
 						</label>
 						<div class="col-lg-3">
 							<form:input path="unitsInStock" id="unitsInStock" type="number" class="form-control"
-							            min="0"/>
+							            min="0" oninput="onInput(this)"
+							            oninvalid="onInvalid(this, ${messages})"/>
+						</div>
+						<div class="col-lg-3 px-0">
+							<form:errors path="unitsInStock" cssClass="text-danger"/>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -111,17 +143,12 @@
 							<spring:message code="addProduct.form.productImg.label"/>
 						</label>
 						<div class="col-lg-3">
-							<div class="custom-file">
-								<form:input path="productImage" id="productImage" type="file"
-								            cssClass="custom-file-input" accept="image/jpeg,image/gif,image/png"
-								            onchange="(function(){
-								                document.getElementById('productImageLabel').innerText = document.getElementById('productImage').files[0].name
-								            })()"/>
-								<label id="productImageLabel" class="custom-file-label" for="productImage"
-								       data-browse="<spring:message code="addProduct.form.productImg.button"/>">
-									<spring:message code="addProduct.form.productImg.placeholder"/>
-								</label>
-							</div>
+							<jsp:include page="components/inputFileUpload.jsp">
+								<jsp:param name="path" value="productImage"/>
+								<jsp:param name="fileType" value="image/jpeg,image/gif,image/png"/>
+								<jsp:param name="buttonName" value="addProduct.form.productImg.button"/>
+								<jsp:param name="placeholder" value="addProduct.form.productImg.placeholder"/>
+							</jsp:include>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -129,33 +156,27 @@
 							<spring:message code="addProduct.form.productGuide.label"/>
 						</label>
 						<div class="col-lg-3">
-							<div class="custom-file">
-								<form:input path="productGuide" id="productGuide" type="file"
-								            cssClass="custom-file-input" accept="application/pdf"
-								            onchange="(function(){
-								                document.getElementById('productGuideLabel').innerText = document.getElementById('productGuide').files[0].name
-								            })()"/>
-								<label id="productGuideLabel" class="custom-file-label" for="productGuide"
-								       data-browse="<spring:message code="addProduct.form.productGuide.button"/>">
-									<spring:message code="addProduct.form.productGuide.placeholder"/>
-								</label>
-							</div>
+							<jsp:include page="components/inputFileUpload.jsp">
+								<jsp:param name="path" value="productGuide"/>
+								<jsp:param name="fileType" value="application/pdf"/>
+								<jsp:param name="buttonName" value="addProduct.form.productGuide.button"/>
+								<jsp:param name="placeholder" value="addProduct.form.productGuide.placeholder"/>
+							</jsp:include>
 						</div>
 					</div>
 					<div class="form-group row">
 						<div class="offset-lg-2 col-lg-3">
 							<input type="submit" id="btnAdd" class="btn btn-primary"
 							       value="<spring:message code="addProduct.form.submit.button"/>"/>
-							<div class="btn btn-light btn-large border text-secondary" onclick="window.history.back()">
-								<span>
-									<i class="far fa-hand-pointer rotate-270-flip-horizontal"></i>
-									<spring:message code="product.card.back.button"/>
-								</span>
-							</div>
+							<jsp:include page="components/buttonBack.jsp">
+								<jsp:param name="backUrl" value="/market/products"/>
+							</jsp:include>
 						</div>
 					</div>
 				</fieldset>
 			</form:form>
 		</section>
+		<jsp:include page="scripts/scriptFormValidation.jsp"/>
+		<jsp:include page="scripts/scriptFileUpload.jsp"/>
 	</body>
 </html>

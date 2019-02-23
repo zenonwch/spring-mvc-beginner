@@ -1,15 +1,14 @@
-<%--@elvariable id="message" type="my.spring.project.springmvc.controller.ExceptionsHandler"--%>
-<%--@elvariable id="exception" type="my.spring.project.springmvc.controller.ExceptionsHandler"--%>
-<%--@elvariable id="url" type="my.spring.project.springmvc.controller.ExceptionsHandler"--%>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%--@elvariable id="message" type="java.lang.String"--%>
+<%--@elvariable id="exception" type="java.lang.String"--%>
+<%--@elvariable id="url" type="java.lang.String"--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<html lang="en">
+
+<html lang="<spring:message code="app.language"/>">
 	<head>
-		<title><spring:message code="product.notFound.page.title"/></title>
-		<meta charset="UTF-8">
+		<jsp:include page="components/head.jsp"/>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<jsp:include page="head.jsp"/>
+		<title><spring:message code="product.notFound.page.title"/></title>
 	</head>
 	<body>
 		<section>
@@ -27,12 +26,9 @@
 				<p><c:out value="${exception}"/></p>
 			</div>
 			<div class="container">
-				<a href="<spring:url value="/market/products"/>" class="btn btn-primary btn-large float-right">
-					<span>
-						<i class="far fa-hand-pointer rotate-270-flip-horizontal"></i>
-						<spring:message code="product.card.back.button"/>
-					</span>
-				</a>
+				<jsp:include page="components/buttonBack.jsp">
+					<jsp:param name="backUrl" value="/market/products"/>
+				</jsp:include>
 			</div>
 		</section>
 	</body>

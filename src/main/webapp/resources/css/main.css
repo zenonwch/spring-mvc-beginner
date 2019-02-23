@@ -24,3 +24,7 @@
 .flag.flag-ru {
     background-position: -48px -48px;
 }
+
+.flag:focus {
+    outline: none;
+}

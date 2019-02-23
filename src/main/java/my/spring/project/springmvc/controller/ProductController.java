@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
@@ -94,9 +95,12 @@ public class ProductController {
     }
 
     @PostMapping("/products/add")
-    public String processAddNewProductForm(@ModelAttribute("newProduct") final Product product,
+    public String processAddNewProductForm(@ModelAttribute("newProduct") @Valid final Product product,
                                            final BindingResult result,
                                            final HttpServletRequest request) {
+        if (result.hasErrors()) {
+            return "addProduct";
+        }
 
         final String[] suppressedFields = result.getSuppressedFields();
         if (suppressedFields.length > 0) {

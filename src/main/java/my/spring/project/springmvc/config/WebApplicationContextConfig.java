@@ -11,6 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.oxm.xstream.XStreamMarshaller;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -65,6 +67,11 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
 
         final HandlerInterceptor promoCodeInterceptor = promoCodeInterceptor();
         registry.addInterceptor(promoCodeInterceptor).addPathPatterns("/**/market/products/specialOffer");
+    }
+
+    @Override
+    public Validator getValidator() {
+        return validatorBean();
     }
 
     @Bean
@@ -131,7 +138,8 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
     @Bean
     public MessageSource messageSource() {
         final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("messages");
+        messageSource.setBasenames("messages", "validationMessages");
+        messageSource.setDefaultEncoding("UTF-8");
 
         return messageSource;
     }
@@ -144,5 +152,14 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         interceptor.setErrorRedirect("invalidPromoCode");
 
         return interceptor;
+    }
+
+    @Bean(name = "validator")
+    public LocalValidatorFactoryBean validatorBean() {
+        final LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+        final MessageSource messageSource = messageSource();
+        validator.setValidationMessageSource(messageSource);
+
+        return validator;
     }
 }

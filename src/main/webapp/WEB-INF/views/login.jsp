@@ -1,21 +1,19 @@
-<%--@elvariable id="error" type="my.spring.project.springmvc.controller.LoginController"--%>
-<%--@elvariable id="accessDenied" type="my.spring.project.springmvc.controller.LoginController"--%>
-<%--@elvariable id="logout" type="my.spring.project.springmvc.controller.LoginController"--%>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%--@elvariable id="error" type="java.lang.String"--%>
+<%--@elvariable id="accessDenied" type="java.lang.String"--%>
+<%--@elvariable id="logout" type="java.lang.String"--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<html lang="en">
+
+<html lang="<spring:message code="app.language"/>">
 	<head>
+		<jsp:include page="components/head.jsp"/>
 		<title><spring:message code="welcome.page.title"/></title>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<jsp:include page="head.jsp"/>
 	</head>
 	<body>
 		<section>
 			<div class="jumbotron">
 				<div class="container">
-					<jsp:include page="langSelector.jsp"/>
+					<jsp:include page="components/langSelector.jsp"/>
 					<h1><spring:message code="welcome.page.greeting"/></h1>
 					<p><spring:message code="welcome.page.tagline"/></p>
 				</div>

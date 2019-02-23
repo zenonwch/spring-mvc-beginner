@@ -1,18 +1,16 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="span" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<html lang="en">
+
+<html lang="<spring:message code="app.language"/>">
 	<head>
+		<jsp:include page="components/head.jsp"/>
 		<title><spring:message code="customers.page.title"/></title>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<jsp:include page="head.jsp"/>
 	</head>
 	<body>
 		<section>
 			<div class="jumbotron">
 				<div class="container">
-					<jsp:include page="langSelector.jsp"/>
+					<jsp:include page="components/langSelector.jsp"/>
 					<h1><spring:message code="customers.page.title"/></h1>
 					<p><spring:message code="customers.page.description"/></p>
 				</div>

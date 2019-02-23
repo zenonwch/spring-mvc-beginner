@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -18,13 +19,28 @@ import java.util.Objects;
 public class Product implements Serializable {
     private static final long serialVersionUID = 0L;
 
+    @Pattern(regexp = "P[0-9]+", message = "{pattern.product.productId.validation}")
     private String productId;
+
+    @Size(min = 4, max = 50, message = "{pattern.product.name.validation}")
     private String name;
+
+    @Min(value = 0, message = "{pattern.product.unitPrice.validation.min}")
+    @Digits(integer = 8, fraction = 2, message = "{pattern.product.unitPrice.validation.digits}")
+    @NotNull(message = "{pattern.product.unitPrice.validation.notNull}")
     private BigDecimal unitPrice;
     private String description;
+
+    @NotBlank(message = "{pattern.product.manufacturer.validation}")
     private String manufacturer;
+
+    @NotBlank(message = "{pattern.product.category.validation}")
     private String category;
+
+    @Min(value = 0, message = "{pattern.product.unitsInStock.validation}")
     private long unitsInStock;
+
+    @Min(value = 0, message = "{pattern.product.unitsInOrder.validation}")
     private long unitsInOrder;
     private boolean discontinued;
     private String condition;

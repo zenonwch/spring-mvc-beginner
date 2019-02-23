@@ -1,14 +1,9 @@
-<%--@elvariable id="message" type="my.spring.project.springmvc.controller.ExceptionsHandler"--%>
-<%--@elvariable id="exception" type="my.spring.project.springmvc.controller.ExceptionsHandler"--%>
-<%--@elvariable id="url" type="my.spring.project.springmvc.controller.ExceptionsHandler"--%>
-<%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<html>
+
+<html lang="<spring:message code="app.language"/>">
 	<head>
+		<jsp:include page="components/head.jsp"/>
 		<title><spring:message code="invalidPromoCode.page.title"/></title>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<jsp:include page="head.jsp"/>
 	</head>
 	<body>
 		<section>
@@ -22,12 +17,9 @@
 		</section>
 		<section>
 			<div class="container">
-				<a href="<spring:url value="/market/products"/>" class="btn btn-primary btn-large float-right">
-					<span>
-						<i class="far fa-hand-pointer rotate-270-flip-horizontal"></i>
-						<spring:message code="product.card.back.button"/>
-					</span>
-				</a>
+				<jsp:include page="components/buttonBack.jsp">
+					<jsp:param name="backUrl" value="/market/products"/>
+				</jsp:include>
 			</div>
 		</section>
 	</body>
