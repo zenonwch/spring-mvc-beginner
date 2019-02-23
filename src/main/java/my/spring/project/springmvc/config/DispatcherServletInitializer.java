@@ -1,6 +1,5 @@
 package my.spring.project.springmvc.config;
 
-import my.spring.project.springmvc.config.jsp.JspConfigDescriptorImpl;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.ServletContext;
@@ -28,8 +27,6 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
         // https://wiki.apache.org/tomcat/FAQ/CharacterEncoding
         servletContext.setRequestCharacterEncoding("UTF-8");
         servletContext.setResponseCharacterEncoding("UTF-8");
-
-        TomcatStandardContextReflectionSetter.setJspConfigDescriptor(servletContext, new JspConfigDescriptorImpl());
 
         super.onStartup(servletContext);
     }

@@ -13,8 +13,9 @@
 	       class="flag flag-by" alt="BY" title="<spring:message code="lang.be.tooltip"/>"
 	       onclick="changeLocale('be')">
 	<sec:authorize access="isAuthenticated()">
-		<input type="button" class="btn btn-light btn-sm ml-2 px-3" style="height: 36px;"
-		       onclick="location.href='<spring:url value="/logout"/>';" value="<spring:message code="logout.button"/>"/>
+		<input type="button" class="btn btn-login btn-sm ml-2 px-3"
+		       value="<spring:message code="logout.button"/>"
+		       onclick="location.href='<spring:url value="/logout"/>'"/>
 	</sec:authorize>
 </div>
 <jsp:include page="../scripts/scriptChangeLocale.jsp"/>
