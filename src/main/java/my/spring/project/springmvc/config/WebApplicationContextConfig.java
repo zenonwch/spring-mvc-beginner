@@ -5,6 +5,9 @@ import my.spring.project.springmvc.domain.Customer;
 import my.spring.project.springmvc.domain.Product;
 import my.spring.project.springmvc.interceptor.ProcessingTimeLogInterceptor;
 import my.spring.project.springmvc.interceptor.PromoCodeInterceptor;
+import my.spring.project.springmvc.validator.ProductImageValidator;
+import my.spring.project.springmvc.validator.ProductValidator;
+import my.spring.project.springmvc.validator.UnitsInStockValidator;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -28,9 +31,7 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import org.springframework.web.servlet.view.xml.MarshallingView;
 import org.springframework.web.util.UrlPathHelper;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Locale;
+import java.util.*;
 
 @Configuration
 @EnableWebMvc
@@ -161,5 +162,16 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         validator.setValidationMessageSource(messageSource);
 
         return validator;
+    }
+
+    @Bean
+    public ProductValidator productValidator() {
+        final Set<Validator> springValidators = new HashSet<>();
+        springValidators.add(new UnitsInStockValidator());
+
+        final long imageAllowedSize = 1_048_576L;
+        springValidators.add(new ProductImageValidator(imageAllowedSize));
+
+        return new ProductValidator(springValidators);
     }
 }

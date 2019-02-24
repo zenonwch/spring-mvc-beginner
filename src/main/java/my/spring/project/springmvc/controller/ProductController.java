@@ -3,6 +3,7 @@ package my.spring.project.springmvc.controller;
 import my.spring.project.springmvc.domain.Product;
 import my.spring.project.springmvc.exception.ProductNotFoundException;
 import my.spring.project.springmvc.service.ProductService;
+import my.spring.project.springmvc.validator.ProductValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,9 +30,11 @@ import static org.springframework.http.MediaType.*;
 public class ProductController {
 
     private final ProductService service;
+    private final ProductValidator productValidator;
 
-    public ProductController(final ProductService service) {
+    public ProductController(final ProductService service, final ProductValidator productValidator) {
         this.service = service;
+        this.productValidator = productValidator;
     }
 
     @GetMapping("/products")
@@ -132,6 +135,7 @@ public class ProductController {
         binder.setAllowedFields("productId", "name", "unitPrice", "description",
                 "manufacturer", "category", "unitsInStock", "condition",
                 "productImage", "productGuide");
+        binder.setValidator(productValidator);
     }
 
     private void uploadProductImage(final Product product, final String rootDir) {
