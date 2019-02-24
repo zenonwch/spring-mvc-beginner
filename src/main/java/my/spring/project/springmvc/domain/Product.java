@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import my.spring.project.springmvc.validator.Category;
+import my.spring.project.springmvc.validator.ProductId;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
@@ -19,6 +21,7 @@ import java.util.Objects;
 public class Product implements Serializable {
     private static final long serialVersionUID = 0L;
 
+    @ProductId
     @Pattern(regexp = "P[0-9]+", message = "{pattern.product.productId.validation}")
     private String productId;
 
@@ -34,6 +37,7 @@ public class Product implements Serializable {
     @NotBlank(message = "{pattern.product.manufacturer.validation}")
     private String manufacturer;
 
+    @Category
     @NotBlank(message = "{pattern.product.category.validation}")
     private String category;
 
