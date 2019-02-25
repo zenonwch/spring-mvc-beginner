@@ -7,12 +7,15 @@ import lombok.ToString;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Getter
 @Setter
 @ToString
-public class Customer {
+public class Customer implements Serializable {
+    private static final long serialVersionUID = 0L;
+
     @Pattern(regexp = "C[0-9]+", message = "{pattern.customer.customerId.validation}")
     private String customerId;
 

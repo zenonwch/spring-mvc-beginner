@@ -26,11 +26,12 @@ public class ProcessingTimeLogInterceptor implements HandlerInterceptor {
                            final Object handler, final ModelAndView modelAndView) {
         final String queryString = request.getQueryString();
         final String path = request.getRequestURL() + (queryString == null ? "" : '?' + queryString);
+        final String method = request.getMethod();
 
         final long startTime = (long) request.getAttribute(START_REQ_TIME_ATTR_NAME);
         final long endTime = System.currentTimeMillis();
 
-        LOG.info("{} millisecond taken to process the request {}.", endTime - startTime, path);
+        LOG.info("{} millisecond taken to process the {} request {}.", endTime - startTime, method, path);
     }
 
     @Override
