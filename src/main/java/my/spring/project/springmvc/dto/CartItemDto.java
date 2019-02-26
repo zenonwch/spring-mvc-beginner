@@ -13,6 +13,8 @@ public class CartItemDto implements Serializable {
 
     private String id;
     private String productId;
+    private String name;
     private int quantity;
+    private BigDecimal unitPrice;
     private BigDecimal totalPrice;
 }

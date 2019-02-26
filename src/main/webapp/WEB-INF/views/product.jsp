@@ -5,6 +5,8 @@
 <html lang="<spring:message code="app.language"/>">
 	<head>
 		<jsp:include page="components/head.jsp"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular.min.js"></script>
+		<script src="<c:url value="/resources/js/controllers.js"/>"></script>
 		<title><c:out value="${product.name}"/></title>
 	</head>
 	<body>
@@ -16,7 +18,7 @@
 				</div>
 			</div>
 		</section>
-		<section class="container">
+		<section class="container" ng-app="cartApp">
 			<div class="row">
 				<div class="col-md-10">
 					<div class="card">
@@ -59,18 +61,26 @@
 								--><spring:message code="product.card.currencyCode"/>
 									</h4>
 									<div class="row justify-content-center">
-										<a href="#" class="btn btn-warning btn-large mr-3">
-									<span class="text-white">
-										<i class="fas fa-shopping-cart fa-flip-horizontal"></i> <!--
-										--><spring:message code="product.card.orderNow.button"/>
-									</span>
+										<a href="#" class="btn btn-warning btn-large mr-3"
+										   ng-controller="cartController"
+										   ng-click="addToCart('<c:out value="${product.productId}"/>')">
+											<span class="text-white">
+												<i class="fas fa-shopping-cart fa-flip-horizontal"></i> <!--
+												--><spring:message code="product.card.orderNow.button"/>
+											</span>
 										</a><!--
-								--><a href="<spring:url value="/market/products"/>"
-                                      class="btn btn-light btn-large border text-secondary">
-									<span>
-										<i class="far fa-hand-pointer rotate-270-flip-horizontal"></i> <!--
-										--><spring:message code="back.button"/>
-									</span>
+									--><a href="<spring:url value="/cart"/>" class="btn btn-secondary btn-large mr-3">
+											<span>
+												<i class="far fa-hand-pointer fa-rotate-90"></i> <!--
+												--><spring:message code="product.card.viewCart.button"/>
+											</span>
+									</a><!--
+									--><a href="<spring:url value="/market/products"/>"
+										  class="btn btn-light btn-large border text-secondary">
+											<span>
+												<i class="far fa-hand-pointer rotate-270-flip-horizontal"></i> <!--
+												--><spring:message code="back.button"/>
+											</span>
 									</a>
 									</div>
 								</div>

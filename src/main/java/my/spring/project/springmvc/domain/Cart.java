@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,6 +23,7 @@ public class Cart implements Serializable {
 
     public Cart(final String id) {
         this.id = id;
+        cartItems = new ArrayList<>();
     }
 
     public BigDecimal getGrandTotal() {

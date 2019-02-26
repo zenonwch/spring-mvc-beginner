@@ -22,6 +22,7 @@ public class CartItemMapper implements RowMapper<CartItem> {
 
         final String productId = rs.getString("PRODUCT_ID");
         final Product product = productService.getProductById(productId);
+        cartItem.setProductId(product.getProductId());
         cartItem.setProduct(product);
 
         final int quantity = rs.getInt("QUANTITY");

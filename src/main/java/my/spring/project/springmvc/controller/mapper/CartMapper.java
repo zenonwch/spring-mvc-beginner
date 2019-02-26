@@ -60,6 +60,8 @@ public final class CartMapper {
 
         final CartItemDto cartItemDto = new CartItemDto();
         cartItemDto.setId(cartItem.getId());
+        cartItemDto.setName(cartItem.getProduct().getName());
+        cartItemDto.setUnitPrice(cartItem.getProduct().getUnitPrice());
 
         final BigDecimal totalPrice = cartItem.getTotalPrice();
         cartItemDto.setTotalPrice(totalPrice);

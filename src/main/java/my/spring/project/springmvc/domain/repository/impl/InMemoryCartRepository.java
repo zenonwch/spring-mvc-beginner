@@ -12,8 +12,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 @Repository
 public class InMemoryCartRepository implements CartRepository {
@@ -31,18 +31,11 @@ public class InMemoryCartRepository implements CartRepository {
         final Map<String, Object> cartParams = new HashMap<>();
         cartParams.put("id", cart.getId());
 
-        final String insertCartQuery = "INSERT INTO CART(ID) VALUES (:id)";
+        final String insertCartQuery = "INSERT INTO CART (ID) VALUES (:id)";
         jdbcTemplate.update(insertCartQuery, cartParams);
 
-        cart.getCartItems()
-                .forEach(ci -> {
-                    final Map<String, Object> cartItemParams = collectCartItemParams(ci, cart.getId());
-
-                    final String insertCartItemQuery = "INSERT INTO CART_ITEM(ID, PRODUCT_ID, CART_ID, QUANTITY) " +
-                            "VALUES (:id, :productId, :cartId, :quantity)";
-
-                    jdbcTemplate.update(insertCartItemQuery, cartItemParams);
-                });
+        final Consumer<CartItem> createCartItem = ci -> createCartItem(ci, cart.getId());
+        cart.getCartItems().forEach(createCartItem);
     }
 
     @Override
@@ -59,18 +52,13 @@ public class InMemoryCartRepository implements CartRepository {
 
     @Override
     public void update(final Cart cart) {
-        final List<CartItem> cartItems = cart.getCartItems();
-
-        for (final CartItem cartItem : cartItems) {
-            final Map<String, Object> params = collectCartItemParams(cartItem, cart.getId());
-
-            final String updateCartItemQuery = "UPDATE CART_ITEM " +
-                    "SET QUANTITY = :quantity, " +
-                    "PRODUCT_ID = :productId " +
-                    "WHERE ID = :id AND CART_ID = :cartId";
-
-            jdbcTemplate.update(updateCartItemQuery, params);
-        }
+        cart.getCartItems().forEach(ci -> {
+            if (isNewItem(ci.getId())) {
+                createCartItem(ci, cart.getId());
+            } else {
+                updateCartItem(ci, cart.getId());
+            }
+        });
     }
 
     @Override
@@ -92,6 +80,32 @@ public class InMemoryCartRepository implements CartRepository {
                 "WHERE PRODUCT_ID = :productId AND CART_ID = :cartId";
 
         jdbcTemplate.update(deleteCartItemQuery, params);
+    }
+
+    private boolean isNewItem(final String cartItemId) {
+        final String countCartItemQuery = "SELECT count(*) FROM CART_ITEM WHERE ID = :id";
+        final Integer count = jdbcTemplate.queryForObject(countCartItemQuery, Collections.singletonMap("id", cartItemId), Integer.class);
+        return count == null || count == 0;
+    }
+
+    private void createCartItem(final CartItem cartItem, final String cartId) {
+        final Map<String, Object> params = collectCartItemParams(cartItem, cartId);
+
+        final String insertCartItemQuery = "INSERT INTO CART_ITEM (ID, PRODUCT_ID, CART_ID, QUANTITY) " +
+                "VALUES (:id, :productId, :cartId, :quantity)";
+
+        jdbcTemplate.update(insertCartItemQuery, params);
+    }
+
+    private void updateCartItem(final CartItem cartItem, final String cartId) {
+        final Map<String, Object> params = collectCartItemParams(cartItem, cartId);
+
+        final String updateCartItemQuery = "UPDATE CART_ITEM " +
+                "SET QUANTITY = :quantity, " +
+                "PRODUCT_ID = :productId " +
+                "WHERE ID = :id AND CART_ID = :cartId";
+
+        jdbcTemplate.update(updateCartItemQuery, params);
     }
 
     private Map<String, Object> collectCartItemParams(final CartItem ci, final String cartId) {
