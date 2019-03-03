@@ -15,10 +15,10 @@ Stack:
 * Xstream
 
 Screenshots:
-![login page_en](/screenshots/login_page_en.png "Login page")
+![login page_en](screenshots/login_page_en.png "Login page")
 
-![login_page_by](/screenshots/login_page_be.png "Login page")
+![login_page_by](screenshots/login_page_be.png "Login page")
 
-![single product page](/screenshots/single_product_page.png "Single Product page")
+![single product page](screenshots/single_product_page.png "Single Product page")
 
-![add product page](/screenshots/add_product_page.png "Add Product page")
+![add product page](screenshots/add_product_page.png "Add Product page")
