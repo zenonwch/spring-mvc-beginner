@@ -11,6 +11,10 @@ public interface CartService {
 
     void delete(String cartId);
 
+    Cart validate(String cartId);
+
+    void clearCart(String cartId);
+
     void addItem(String cartId, String productId);
 
     void removeItem(String cartId, String productId);

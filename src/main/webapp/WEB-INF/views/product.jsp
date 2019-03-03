@@ -60,10 +60,11 @@
 										<c:out value="${product.unitPrice}"/> <!--
 								--><spring:message code="product.card.currencyCode"/>
 									</h4>
+									<spring:message code="product.add.success.alert" var="successMsg"/>
 									<div class="row justify-content-center">
 										<a href="#" class="btn btn-warning btn-large mr-3"
 										   ng-controller="cartController"
-										   ng-click="addToCart('<c:out value="${product.productId}"/>')">
+										   ng-click="addToCart('<c:out value="${product.productId}"/>', '<c:out value="${successMsg}"/>')">
 											<span class="text-white">
 												<i class="fas fa-shopping-cart fa-flip-horizontal"></i> <!--
 												--><spring:message code="product.card.orderNow.button"/>

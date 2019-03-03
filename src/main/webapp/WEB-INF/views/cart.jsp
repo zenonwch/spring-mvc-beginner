@@ -62,7 +62,7 @@
 						<th></th>
 					</tr>
 				</table>
-				<a href="#" class="btn btn-success pull-right mr-3">
+				<a href="<spring:url value="/checkout?cartId=${cartId}"/>" class="btn btn-success pull-right mr-3">
 					<span>
 						<i class="fas fa-shopping-cart fa-flip-horizontal"></i> <!--
 						--><spring:message code="cart.button.checkout"/>

@@ -36,11 +36,11 @@ cartApp.controller('cartController', function ($scope, $http) {
         $scope.refreshCart(cartId);
     };
 
-    $scope.addToCart = function (productId) {
+    $scope.addToCart = function (productId, successMessage) {
         console.log(productId);
         $http.put(cartBaseUrl + 'add/' + productId, null)
             .then(() => {
-                alert("Product Successfully added to the Cart!");
+                alert(successMessage);
             });
     };
 

@@ -4,6 +4,7 @@ import my.spring.project.springmvc.domain.Cart;
 import my.spring.project.springmvc.domain.CartItem;
 import my.spring.project.springmvc.domain.Product;
 import my.spring.project.springmvc.domain.repository.CartRepository;
+import my.spring.project.springmvc.exception.InvalidCartException;
 import my.spring.project.springmvc.service.CartService;
 import my.spring.project.springmvc.service.ProductService;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,21 @@ public class CartServiceImpl implements CartService {
     @Override
     public void delete(final String cartId) {
         repository.delete(cartId);
+    }
+
+    @Override
+    public Cart validate(final String cartId) {
+        final Cart cart = read(cartId);
+        if (cart == null || cart.getCartItems().isEmpty()) {
+            throw new InvalidCartException(cartId);
+        }
+
+        return cart;
+    }
+
+    @Override
+    public void clearCart(final String cartId) {
+        repository.clearCart(cartId);
     }
 
     @Override

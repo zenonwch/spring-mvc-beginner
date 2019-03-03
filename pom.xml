@@ -21,6 +21,7 @@
         <!-- Spring -->
         <spring.version>5.1.5.RELEASE</spring.version>
         <spring.security.version>5.1.4.RELEASE</spring.security.version>
+        <spring.flow.version>2.5.1.RELEASE</spring.flow.version>
 
         <!-- Bean validation -->
         <hibernate.version>6.1.0.Alpha2</hibernate.version>
@@ -39,6 +40,8 @@
 
         <!-- JSP -->
         <jstl.version>1.2</jstl.version>
+        <!-- conversion java.time to String in JSP-->
+        <java.time.jsptags.version>1.1.4</java.time.jsptags.version>
 
         <!-- HSQL DB -->
         <hsqldb.version>2.4.1</hsqldb.version>
@@ -77,6 +80,28 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
             <version>${spring.security.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.webflow</groupId>
+            <artifactId>spring-webflow</artifactId>
+            <version>${spring.flow.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.webflow</groupId>
+            <artifactId>spring-binding</artifactId>
+            <version>${spring.flow.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>*</groupId>
@@ -131,6 +156,12 @@
             <artifactId>jstl</artifactId>
             <version>${jstl.version}</version>
         </dependency>
+        <dependency>
+            <groupId>net.sargue</groupId>
+            <artifactId>java-time-jsptags</artifactId>
+            <version>${java.time.jsptags.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>

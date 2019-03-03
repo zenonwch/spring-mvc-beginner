@@ -31,7 +31,8 @@ public class HomeController {
         model.addAttribute("tagline", tagline);
         redirectAttributes.addFlashAttribute("tagline", tagline);
 
-        return "redirect:/welcome/greeting";
+//        return "redirect:/welcome/greeting";
+        return "welcome";
     }
 
     @GetMapping("/welcome/greeting")

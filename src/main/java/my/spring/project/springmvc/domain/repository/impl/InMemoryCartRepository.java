@@ -63,11 +63,16 @@ public class InMemoryCartRepository implements CartRepository {
 
     @Override
     public void delete(final String id) {
-        final String deleteCartItemQuery = "DELETE FROM CART_ITEM WHERE CART_ID = :id";
-        jdbcTemplate.update(deleteCartItemQuery, Collections.singletonMap("id", id));
+        clearCart(id);
 
         final String deleteCartQuery = "DELETE FROM CART WHERE ID = :id";
         jdbcTemplate.update(deleteCartQuery, Collections.singletonMap("id", id));
+    }
+
+    @Override
+    public void clearCart(final String id) {
+        final String deleteCartItemsQuery = "DELETE FROM CART_ITEM WHERE CART_ID = :id";
+        jdbcTemplate.update(deleteCartItemsQuery, Collections.singletonMap("id", id));
     }
 
     @Override
