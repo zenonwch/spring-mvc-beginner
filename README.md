@@ -13,6 +13,9 @@ Stack:
 * Bootstrap 4.3 + Fontawesome 5.7
 * Jackson
 * Xstream
+* Testing:
+    * JUnit 5
+    * Spring Test
 
 Screenshots:
 ![login page_en](screenshots/login_page_en.png "Login page")

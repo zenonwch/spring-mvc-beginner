@@ -45,7 +45,10 @@ public final class CartMapper {
         final List<CartItem> cartItems = cartItemDtoList == null ?
                 Collections.emptyList() :
                 cartItemDtoList.stream()
-                        .map(CartMapper::cartItemFromDto)
+                        .map(cid -> {
+                            cid.setId(cart.getId() + cid.getProductId());
+                            return cartItemFromDto(cid);
+                        })
                         .collect(Collectors.toList());
 
         cart.setCartItems(cartItems);

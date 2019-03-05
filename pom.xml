@@ -51,6 +51,12 @@
 
         <!-- logging -->
         <log4j.version>2.11.2</log4j.version>
+
+        <!-- testing -->
+        <junit.version>5.4.0</junit.version>
+        <hamcrest.version>2.1</hamcrest.version>
+        <json.path.version>2.4.0</json.path.version>
+        <javax.el.version>3.0.1-b11</javax.el.version>
     </properties>
 
     <dependencies>
@@ -187,6 +193,36 @@
             <artifactId>log4j-core</artifactId>
             <version>${log4j.version}</version>
         </dependency>
-    </dependencies>
 
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <version>${hamcrest.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>${json.path.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.el</artifactId>
+            <version>${javax.el.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>

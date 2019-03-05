@@ -8,13 +8,13 @@ import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
-import static my.spring.project.springmvc.validator.CategoryValidator.CATEGORIES;
+import static my.spring.project.springmvc.domain.Category.CATEGORIES;
 
 @Target({METHOD, FIELD, ANNOTATION_TYPE})
 @Retention(RUNTIME)
 @Constraint(validatedBy = CategoryValidator.class)
 @Documented
-public @interface Category {
+public @interface ValidCategory {
     String message() default "{validator.category.message} " + CATEGORIES + '.';
 
     Class<?>[] groups() default {};

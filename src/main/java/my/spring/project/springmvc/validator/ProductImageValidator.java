@@ -4,6 +4,7 @@ import my.spring.project.springmvc.domain.Product;
 import org.apache.commons.io.FileUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import org.springframework.web.multipart.MultipartFile;
 
 public class ProductImageValidator implements Validator {
 
@@ -24,7 +25,8 @@ public class ProductImageValidator implements Validator {
 
         final String displayAllowedSize = FileUtils.byteCountToDisplaySize(allowedSize);
 
-        if (product.getProductImage().getSize() > allowedSize) {
+        final MultipartFile productImage = product.getProductImage();
+        if (productImage != null && productImage.getSize() > allowedSize) {
             errors.rejectValue("productImage", "validator.productImage.size.message", new Object[]{displayAllowedSize}, null);
         }
     }

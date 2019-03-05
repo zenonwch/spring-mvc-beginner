@@ -1,5 +1,6 @@
 package my.spring.project.springmvc.domain.repository.impl;
 
+import my.spring.project.springmvc.domain.Category;
 import my.spring.project.springmvc.domain.Product;
 import my.spring.project.springmvc.domain.repository.ProductRepository;
 import my.spring.project.springmvc.exception.ProductNotFoundException;

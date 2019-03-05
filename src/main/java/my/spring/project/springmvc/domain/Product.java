@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import my.spring.project.springmvc.validator.Category;
 import my.spring.project.springmvc.validator.ProductId;
+import my.spring.project.springmvc.validator.ValidCategory;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
@@ -22,10 +22,12 @@ public class Product implements Serializable {
     private static final long serialVersionUID = 0L;
 
     @ProductId
+    @NotNull(message = "{pattern.product.productId.validation}")
     @Pattern(regexp = "P[0-9]+", message = "{pattern.product.productId.validation}")
     private String productId;
 
     @Size(min = 4, max = 50, message = "{pattern.product.name.validation}")
+    @NotNull(message = "{pattern.product.name.validation}")
     private String name;
 
     @Min(value = 0, message = "{pattern.product.unitPrice.validation.min}")
@@ -37,14 +39,16 @@ public class Product implements Serializable {
     @NotBlank(message = "{pattern.product.manufacturer.validation}")
     private String manufacturer;
 
-    @Category
+    @ValidCategory
     @NotBlank(message = "{pattern.product.category.validation}")
     private String category;
 
     @Min(value = 0, message = "{pattern.product.unitsInStock.validation}")
+    @NotNull(message = "{pattern.product.unitsInStock.validation}")
     private long unitsInStock;
 
     @Min(value = 0, message = "{pattern.product.unitsInOrder.validation}")
+    @NotNull(message = "{pattern.product.unitsInStock.validation}")
     private long unitsInOrder;
     private boolean discontinued;
     private String condition;
