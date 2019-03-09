@@ -91,5 +91,6 @@
 				</div>
 			</div>
 		</section>
+		<jsp:include page="components/modal.jsp"/>
 	</body>
 </html>

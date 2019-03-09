@@ -5,5 +5,5 @@
 <img class="img-fluid pt-3"
      style="<c:out value="${param.style}"/>"
      src="<c:url value="/img/${param.imageFileName}"/>"
-     onerror="this.onerror=null; this.src='<c:url value="/img/${noImage}"/>'"
+     onerror="this.onerror=null; this.src='<c:url value="${noImage}"/>'"
      alt="<c:out value="${param.imageName}"/>"/>

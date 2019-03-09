@@ -37,10 +37,21 @@ cartApp.controller('cartController', function ($scope, $http) {
     };
 
     $scope.addToCart = function (productId, successMessage) {
-        console.log(productId);
         $http.put(cartBaseUrl + 'add/' + productId, null)
             .then(() => {
-                alert(successMessage);
+                let modalElt = document.getElementById('modal');
+                let modalBody = document.getElementsByClassName('modal-body')[0].getElementsByTagName('p')[0];
+                modalBody.innerHTML = successMessage;
+
+                try {
+                    // noinspection JSUnresolvedFunction
+                    let modal = new Modal(modalElt);
+                    modal.show();
+                } catch (err) {
+                    if (err.message === 'Modal is not defined') {
+                        alert(successMessage);
+                    }
+                }
             });
     };
 
