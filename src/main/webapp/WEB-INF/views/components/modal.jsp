@@ -1,11 +1,15 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <div class="modal fade pt-4" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content" style="background-color: #d4edda; border-color: #c3e6cb;">
 			<div class="modal-body text-success">
 				<p>
-					Success
+					...
 				</p>
-				<button type="button" class="btn btn-sm float-right text-success" data-dismiss="modal" style="background-color: #e4ffea;border-color: #c3e6cb;">Close</button>
+				<button type="button" class="btn btn-sm float-right text-success" data-dismiss="modal" style="background-color: #e4ffea;border-color: #c3e6cb;">
+					<spring:message code="close.button"/>
+				</button>
 			</div>
 		</div>
 	</div>
