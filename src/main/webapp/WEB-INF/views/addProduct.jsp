@@ -14,6 +14,7 @@
 					<jsp:include page="components/langSelector.jsp"/>
 					<h1><spring:message code="products.page.title"/></h1>
 					<p><spring:message code="addProduct.page.description"/></p>
+					<jsp:include page="components/navigation.jsp"/>
 				</div>
 			</div>
 		</section>
