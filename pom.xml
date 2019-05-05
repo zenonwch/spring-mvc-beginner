@@ -196,7 +196,7 @@
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
+            <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
@@ -225,4 +225,38 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <!--
+            These plugins are present in maven.
+            But if we need a newer version, we have two options:
+                a) new maven version usage
+                b) plugin versions overriding
+        -->
+        <plugins>
+            <!--
+                Maven hits the error if can't find the web.xml.
+                To avoid this error we need to:
+                    a) declare maven-war-plugin of version < 3.0.0
+                        with the option failOnMissingWebXml == true
+                    b) declare maven-war-plugin of version >= 3.0.0
+                        where the option failOnMissingWebXml is set to false by default
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.2</version>
+            </plugin>
+
+            <plugin>
+                <!--
+                    For tests running.
+                    For using with JUnit5 needs the junit-jupiter-engine dependency.
+                -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M3</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>
